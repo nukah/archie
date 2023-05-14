@@ -3,7 +3,21 @@
 	<article>
 		<div class="title">
 			<h1 class="title">{{ .Title }}</h1>
-			<div class="meta">Posted on {{ dateFormat "Jan 2, 2006" .Date }}{{ if .Draft }} <span class="draft-label">DRAFT</span> {{ end }}</div>
+			<div class="meta">
+				<section class="article-meta">
+					Posted on {{ .Date.UTC.Format (.Site.Params.date_format | default "02/01/2006") }}
+					{{ if ne .Date .Lastmod }}
+						Last modified on {{ .Lastmod.UTC.Format (.Site.Params.date_format | default "02/01/2006") }}
+					{{ end }}
+					{{ if gt .ReadingTime 2 }}
+						<br> Reading time: {{ .ReadingTime }} minutes
+					{{ end }}
+				</section>
+
+				{{ if .Draft }}
+					<span class="draft-label">DRAFT</span>
+				{{ end }}
+			</div>
 		</div>
 		{{ if isset .Params "tldr" }}
 		<div class="tldr">
@@ -48,3 +62,4 @@
 	</article>
 </main>
 {{ end }}
+
