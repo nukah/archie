@@ -12,8 +12,16 @@
 		</div>{{ end }}
 
 		<section class="body">
+			{{ if and (gt .WordCount 400 ) }}
+				<div class="table-of-content">
+					<h3>Table of content</h3>
+					{{ .TableOfContents }}
+					<hr>
+				</div>
+			{{ end }}
 			{{ .Content }}
 		</section>
+
 
 		<div class="post-tags">
 			{{ if ne .Type "page" }}
